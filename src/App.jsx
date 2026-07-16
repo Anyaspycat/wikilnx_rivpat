@@ -62,7 +62,11 @@ function App() {
           <ActiveComponent />
         </main>
 
-        <footer className="wiki-footer">Patricia Riveros Estay</footer>
+        <footer className="wiki-footer">
+          <span>Wiki Linux Server · Patricia Riveros Estay</span>
+          <br/>
+          <small>Ubuntu Server 24.04 LTS · VirtualBox · SSH · nginx</small>
+        </footer>
       </div>
     </div>
   )
