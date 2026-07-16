@@ -46,6 +46,9 @@ a {
   display: flex;
   min-height: 100vh;
   background: transparent;
+  width: min(100%, 1080px);
+  margin: 0 auto;
+  background: rgba(253, 248, 239, 0.94);
 }
 
 .wiki-sidebar {
@@ -2183,3 +2186,51 @@ a {
   }
 }
 
+/* Decoraciones kawaii laterales */
+
+body {
+  overflow-x: hidden;
+}
+
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 0;
+  width: 360px;
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: auto 100vh;
+  pointer-events: none;
+  opacity: 0.82;
+}
+
+/* Decoración izquierda */
+body::before {
+  left: 0;
+  background-image: url('./assets/kawaii_left.png');
+  background-position: left center;
+}
+
+/* Decoración derecha */
+body::after {
+  right: 0;
+  background-image: url('./assets/kawaii_right.png');
+  background-position: right center;
+}
+
+/* Mantiene la wiki sobre las decoraciones */
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ocultar decoraciones cuando no exista suficiente espacio */
+@media (max-width: 1450px) {
+  body::before,
+  body::after {
+    display: none;
+  }
+}
