@@ -226,27 +226,41 @@ function Prompts() {
             <h4>Total de prompts</h4>
             <p className="prompt-result-count">{totalPrompts}</p>
           </article>
-          <article className="prompt-summary-card">
+          <article className="prompt-summary-card chatgpt">
             <h4>ChatGPT</h4>
             <p className="prompt-result-count">{chatgptCount}</p>
           </article>
-          <article className="prompt-summary-card">
+          <article className="prompt-summary-card copilot">
             <h4>GitHub Copilot</h4>
             <p className="prompt-result-count">{copilotCount}</p>
           </article>
         </div>
       </section>
 
-      <section className="section-card">
-        <div className="prompt-filter-bar">
-          <div className="prompt-list-heading">
+      <section className="section-card prompts-register-section">
+        <div className="prompt-list-heading">
+          <div>
             <h3 className="section-title">Registros</h3>
+            <p>Filtra por herramienta o busca una sección específica.</p>
           </div>
-          <div className="prompt-tool-tabs">
+
+          <span className="prompt-visible-count">
+            {filteredRecords.length} de {totalPrompts}
+          </span>
+        </div>
+
+        <div className="prompt-filter-bar">
+          <div
+            className="prompt-tool-tabs"
+            role="tablist"
+            aria-label="Filtrar registros por herramienta"
+          >
             {['Todas', 'ChatGPT', 'GitHub Copilot'].map((tool) => (
               <button
                 key={tool}
                 type="button"
+                role="tab"
+                aria-selected={selectedTool === tool}
                 className={`filter-button ${selectedTool === tool ? 'active' : ''}`}
                 onClick={() => setSelectedTool(tool)}
               >
@@ -254,68 +268,59 @@ function Prompts() {
               </button>
             ))}
           </div>
-          <input
-            className="prompt-search"
-            type="search"
-            value={searchText}
-            onChange={(event) => setSearchText(event.target.value)}
-            placeholder="Buscar por sección, herramienta, prompt o resultado"
-          />
+
+          <label className="prompt-search-wrapper">
+            <span>Buscar registros</span>
+            <input
+              className="prompt-search"
+              type="search"
+              value={searchText}
+              onChange={(event) => setSearchText(event.target.value)}
+              placeholder="Ejemplo: nginx, permisos o App.jsx"
+            />
+          </label>
         </div>
 
         {filteredRecords.length > 0 ? (
-          <>
-            <div className="prompts-table-wrapper">
-              <table className="prompts-table">
-                <thead>
-                  <tr>
-                    <th>N°</th>
-                    <th>Herramienta</th>
-                    <th>Sección</th>
-                    <th>Prompt textual utilizado</th>
-                    <th>Resultado</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredRecords.map((record) => (
-                    <tr key={record.id}>
-                      <td>
-                        <span className="prompt-number">{record.id}</span>
-                      </td>
-                      <td>
-                        <span className="prompt-tool-badge">{record.tool}</span>
-                      </td>
-                      <td>
-                        <code className="prompt-section-code">{record.section}</code>
-                      </td>
-                      <td>{record.prompt}</td>
-                      <td>{record.result}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+          <div className="prompt-record-list">
+            {filteredRecords.map((record) => {
+              const toolClass =
+                record.tool === 'ChatGPT' ? 'chatgpt' : 'copilot'
 
-            <div className="prompts-mobile-list">
-              {filteredRecords.map((record) => (
-                <article className="prompt-mobile-card" key={record.id}>
-                  <div className="prompt-mobile-meta">
-                    <span className="prompt-number">{record.id}</span>
-                    <span className="prompt-tool-badge">{record.tool}</span>
+              return (
+                <article
+                  className={`prompt-record-card ${toolClass}`}
+                  key={record.id}
+                >
+                  <header className="prompt-record-header">
+                    <div className="prompt-record-meta">
+                      <span className="prompt-number">{record.id}</span>
+
+                      <span className={`prompt-tool-badge ${toolClass}`}>
+                        {record.tool}
+                      </span>
+                    </div>
+
+                    <code className="prompt-section-code">
+                      {record.section}
+                    </code>
+                  </header>
+
+                  <div className="prompt-record-grid">
+                    <section className="prompt-record-block">
+                      <h4>Prompt textual utilizado</h4>
+                      <p>{record.prompt}</p>
+                    </section>
+
+                    <section className="prompt-record-block result">
+                      <h4>Resultado</h4>
+                      <p>{record.result}</p>
+                    </section>
                   </div>
-                  <p>
-                    <strong>Sección:</strong> <code className="prompt-section-code">{record.section}</code>
-                  </p>
-                  <p>
-                    <strong>Prompt:</strong> {record.prompt}
-                  </p>
-                  <p>
-                    <strong>Resultado:</strong> {record.result}
-                  </p>
                 </article>
-              ))}
-            </div>
-          </>
+              )
+            })}
+          </div>
         ) : (
           <div className="prompt-empty-state">
             <p>No se encontraron registros que coincidan con la búsqueda.</p>
