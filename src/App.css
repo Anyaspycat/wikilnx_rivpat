@@ -2068,3 +2068,118 @@ a {
   }
 }
 
+/* Sección de nginx */
+
+.nginx-progress-steps {
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+
+.nginx-command-block {
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.nginx-highlight-section {
+  margin-top: 1.1rem;
+}
+
+.nginx-highlight-section h4 {
+  margin: 0 0 0.6rem;
+  color: #425a78;
+}
+
+.nginx-highlight-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.nginx-highlight-chip {
+  padding: 0.42rem 0.7rem;
+  background: linear-gradient(135deg, var(--lavender), var(--sky));
+  color: #4c5574;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: Consolas, 'Courier New', monospace;
+  font-size: 0.84rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.nginx-before-after-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.2rem;
+  margin-top: 1rem;
+}
+
+.nginx-comparison-card {
+  margin: 0;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.98),
+    rgba(247, 242, 255, 0.95)
+  );
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+.nginx-comparison-image {
+  width: 100%;
+  height: 320px;
+  object-fit: contain;
+  padding: 0.8rem;
+  background: #ffffff;
+  border-bottom: 1px solid var(--border);
+  transition:
+    transform 0.25s ease,
+    filter 0.25s ease;
+}
+
+.image-preview-button:hover .nginx-comparison-image,
+.image-preview-button:focus-visible .nginx-comparison-image {
+  transform: scale(1.012);
+  filter: brightness(0.95);
+}
+
+.nginx-comparison-caption {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem 1.1rem;
+  text-align: left;
+}
+
+.nginx-comparison-caption strong {
+  color: #425a78;
+  font-size: 1.02rem;
+}
+
+.nginx-comparison-caption span {
+  color: var(--ink-soft);
+}
+
+@media (max-width: 900px) {
+  .nginx-progress-steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .nginx-progress-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .nginx-before-after-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nginx-comparison-image {
+    height: auto;
+    max-height: 520px;
+    padding: 0.5rem;
+  }
+}
+
