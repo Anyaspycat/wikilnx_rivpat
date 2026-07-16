@@ -1,121 +1,70 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
 import './App.css'
+import Inicio from './components/Inicio'
+import Licencias from './components/Licencias'
+import Instalacion from './components/Instalacion'
+import Permisos from './components/Permisos'
+import Paquetes from './components/Paquetes'
+import Nginx from './components/Nginx'
+import Prompts from './components/Prompts'
+
+const sections = [
+  { id: 'inicio', label: 'Inicio', component: Inicio },
+  { id: 'licencias', label: 'Licencias', component: Licencias },
+  { id: 'instalacion', label: 'Instalación', component: Instalacion },
+  { id: 'permisos', label: 'Permisos', component: Permisos },
+  { id: 'paquetes', label: 'Paquetes', component: Paquetes },
+  { id: 'nginx', label: 'Nginx', component: Nginx },
+  { id: 'prompts', label: 'Prompts', component: Prompts }
+]
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [activeSection, setActiveSection] = useState(sections[0])
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  const ActiveComponent = activeSection.component
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="wiki-app">
+      <aside className={`wiki-sidebar ${menuOpen ? 'open' : ''}`}>
+        <div className="wiki-brand">Wiki Linux Server</div>
+        <nav className="wiki-nav" aria-label="Navegación principal">
+          {sections.map((section) => (
+            <button
+              key={section.id}
+              type="button"
+              className={`nav-button ${activeSection.id === section.id ? 'active' : ''}`}
+              onClick={() => {
+                setActiveSection(section)
+                setMenuOpen(false)
+              }}
+            >
+              {section.label}
+            </button>
+          ))}
+        </nav>
+      </aside>
 
-      <div className="ticks"></div>
+      <div className="wiki-main">
+        <header className="wiki-topbar">
+          <button
+            type="button"
+            className="menu-toggle"
+            onClick={() => setMenuOpen((value) => !value)}
+            aria-label="Abrir o cerrar menú"
+          >
+            ☰
+          </button>
+          <h1>{activeSection.label}</h1>
+        </header>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        <main className="wiki-content">
+          <ActiveComponent />
+        </main>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+        <footer className="wiki-footer">Patricia Riveros Estay</footer>
+      </div>
+    </div>
   )
 }
 
